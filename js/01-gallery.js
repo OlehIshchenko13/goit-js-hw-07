@@ -1,38 +1,42 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
-console.log(galleryItems);
 
-const galleryContRef = document.querySelector('.gallery')
+const refs = {
+gallery: document.querySelector('.gallery')
+}
+const makeItem=({preview,original,description})=>`<div class="gallery__item">
+    <a class="gallery__link" href="${original}">
+      <img
+        class="gallery__image"
+        src="${preview}"
+        data-source="${original}"
+        alt="${description}"
+      />
+    </a>
+  </div>`;
+function makeArrayItem() {
+    
+   return galleryItems.map(item =>makeItem(item)).join('')
+   
+}
+refs.gallery.insertAdjacentHTML('afterbegin',makeArrayItem())
 
 
-const createGalleryImgItem = ({preview,original,description}) => `<div class="gallery__item">
-<a class="gallery__link" href="${original}">
-  <img
-    class="gallery__image"
-    src="${preview}"
-    data-source="${original}"
-    alt="${description}"
-  />
-</a>
-</div>`;
-const galleryMarkup = galleryItems.reduce((acc,item)=>acc + createGalleryImgItem(item),'');
-
-galleryContRef.insertAdjacentHTML('afterbegin',galleryMarkup);
 
 
 
+refs.gallery.addEventListener('click',onGalleryClick)
 
-galleryContRef.addEventListener('click', onGalleryItemClick);
-
-function onGalleryItemClick(e) {
-	e.preventDefault();
- const galleryTarget = e.target.classList.contains("gallery__image")
+function onGalleryClick(e) {
+    e.preventDefault();
+   
+    const galleryTarget = e.target.classList.contains("gallery__image")
 	if (!galleryTarget) {
 		return;
 	}
 
-	addOriginalImgToModal(e.target.dataset.source);
+    addOriginalImgToModal(e.target.dataset.source);
 }
 
 function addOriginalImgToModal(originalImageLink) {
@@ -45,7 +49,6 @@ function addOriginalImgToModal(originalImageLink) {
 	closeKeybord(instance);
 
 }
-
 function closeKeybord(instance) {
 	document.addEventListener("keydown", (e) => {
 		if (e.code == "Escape") {
@@ -53,5 +56,8 @@ function closeKeybord(instance) {
 		}
 	}, { once: true });
 }
+
+
+
 
 
