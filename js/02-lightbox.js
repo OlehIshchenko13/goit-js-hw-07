@@ -19,18 +19,15 @@ function makeArrayItems() {
 }
 refs.list.insertAdjacentHTML('afterbegin',makeArrayItems());
 
-refs.list.addEventListener('click',onClickListItem)
 
-function onClickListItem(e) {
-    e.preventDefault();
+    // e.preventDefault();
 
-    const galleryTarget = e.target.classList.contains("gallery__image")
-    if(!galleryItems){
-        return;
-    }
+    // const galleryTarget = e.target.classList.contains("gallery__image")
+    // if(!galleryItems){
+    //     return;
+    // }
 
     const lightbox = new SimpleLightbox('.gallery a', { 
         captionsData: 'alt',
 	    captionDelay: 300,
      });
-}
